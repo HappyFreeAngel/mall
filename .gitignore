@@ -5,6 +5,11 @@ target/
 .idea/
 *.iml
 
+
+*.tar.gz
+*.tgz
+
+
 # Eclipse #
 .settings/
 .classpath

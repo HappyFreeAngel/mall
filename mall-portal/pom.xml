@@ -62,6 +62,67 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
+
+            <plugin>
+                <groupId>com.spotify</groupId>
+                <artifactId>docker-maven-plugin</artifactId>
+                <version>1.2.0</version>
+                <executions>
+                    <execution>
+                        <id>build-image</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>build</goal>
+                        </goals>
+
+                        <configuration>
+                            <imageName>${docker-registry-host}:${docker-registry-host-push-port}/mall/${project.artifactId}:${project.version}</imageName>
+                        </configuration>
+                    </execution>
+
+
+<!--                    <execution>-->
+<!--                        <id>tag-image</id>-->
+<!--                        <phase>package</phase>-->
+<!--                        <goals>-->
+<!--                            <goal>tag</goal>-->
+<!--                        </goals>-->
+<!--                        <configuration>-->
+<!--                            <image>mall/${project.artifactId}:${project.version}</image>-->
+<!--                            <newName>${docker-registry-host}:${docker-registry-host-push-port}/mall/${project.artifactId}:${project.version}</newName>-->
+<!--                        </configuration>-->
+<!--                    </execution>-->
+
+                    <execution>
+                        <id>push-image</id>
+                        <phase>deploy</phase>
+                        <goals>
+                            <goal>push</goal>
+                        </goals>
+                        <configuration>
+                            <imageName>${docker-registry-host}:${docker-registry-host-push-port}/mall/${project.artifactId}:${project.version}</imageName>
+                        </configuration>
+                    </execution>
+
+                </executions>
+                <configuration>
+                    <imageName>${docker-registry-host}:${docker-registry-host-push-port}/mall/${project.artifactId}:${project.version}</imageName>
+                    <dockerHost>unix:///var/run/docker.sock</dockerHost>
+<!--                    <dockerCertPath>/Users/linyingjie/nexus.linkaixin.com.crt</dockerCertPath>-->
+                    <baseImage>nexus.linkaixin.com:2443/common-docker-starter:openjdk-8u191-alpine3.8-support-ssh-login-1.0.0</baseImage>
+                    <entryPoint>["java", "-jar", "-Dspring.profiles.active=prod","/${project.build.finalName}.jar"]</entryPoint>
+                    <resources>
+                        <resource>
+                            <targetPath>/</targetPath>
+                            <directory>${project.build.directory}</directory>
+                            <include>${project.build.finalName}.jar</include>
+                        </resource>
+                    </resources>
+                    <serverId>nexus-docker-registry</serverId>
+                    <!-- <registryUrl>119.145.41.171:8082/v1/</registryUrl> -->
+                </configuration>
+            </plugin>
+
             <!--<plugin>-->
                 <!--<groupId>com.spotify</groupId>-->
                 <!--<artifactId>docker-maven-plugin</artifactId>-->

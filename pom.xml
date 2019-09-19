@@ -9,6 +9,17 @@
     <version>1.0-SNAPSHOT</version>
     <packaging>pom</packaging>
 
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <java.version>1.8</java.version>
+
+        <docker-registry-host>nexus.linkaixin.com</docker-registry-host>
+        <docker-registry-host-push-port>1443</docker-registry-host-push-port>
+        <docker-registry-host-pull-port>2443</docker-registry-host-pull-port>
+        <useMavenSettingsForAuth>true</useMavenSettingsForAuth>
+    </properties>
+
     <modules>
         <module>mall-common</module>
         <module>mall-mbg</module>
@@ -54,6 +65,14 @@
             <artifactId>druid-spring-boot-starter</artifactId>
             <version>1.1.10</version>
         </dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-compiler-plugin -->
+        <dependency>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-compiler-plugin</artifactId>
+            <version>3.8.1</version>
+        </dependency>
+
     </dependencies>
 
 </project>
